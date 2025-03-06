@@ -158,9 +158,10 @@
                                                     <th>课程名称</th>
                                                     <th>章节操作</th>
                                             <tbody>
-                                               {% for course_name, sections in courses.items() %}
+                                               {% for course in courses %}
+
                                                     <tr>
-                                                        <td>{{course_name}}</td>
+                                                        <td> {{course['course_name']}}</td>
                                                         <td>
                                                             <div class="btn-group">
                                                               <button type="button" class="btn btn-danger">操作</button>
@@ -168,15 +169,16 @@
                                                                 <span class="sr-only">操作</span>
                                                               </button>
                                                               <div class="dropdown-menu">
-                                                                <a class="dropdown-item" data-toggle="modal" data-target="#{{course_name}}" href="#">增加章节</a>
-                                                                <a class="dropdown-item" data-toggle="modal"  data-target="#{{course_name}}01" href="#">更新、删除章节</a>
-                                                                <a class="dropdown-item" href="/cla_dis/{{course_id}}/0">查看课程章节</a>
-                                                            </div>
+                                                                <a class="dropdown-item" data-toggle="modal" data-target="#{{course['course_id']}}" href="#">增加章节</a>
+                                                                <a class="dropdown-item" data-toggle="modal"  data-target="#{{course['course_name']}}" href="#">更新、删除章节</a>
+
+                                                                        <a class="dropdown-item" href="/cla_dis/{{course['course_id']}}/0">查看章节</a>
+
                                                       </div>
                                                         </td>
                                                         <!-- 更新弹出框 -->
                                                           <!-- 更新弹出框 -->
-                                                        <div class="modal fade" id="{{course_name}}01" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="{{course['course_name']}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                               <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                   <div class="modal-header">
@@ -186,7 +188,7 @@
                                                                     </button>
                                                                   </div>
                                                                   <div class="modal-body">
-                                                                      {% for section in sections   %}
+                                                                      {% for section in course['sections']   %}
                                                                    <form id="update_course" action="/update_cour_sec/{{section.section_ID}}" method="post">
                                                                         <div class="accordion" id="accordionExample">
                                                                              <div class="card">
@@ -249,7 +251,7 @@
                                                               </div>
                                                             </div>
 <!--                                                        增加-->
-                                                         <div class="modal fade" id="{{course_name}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel01" aria-hidden="true">
+                                                         <div class="modal fade" id="{{course['course_id']}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel01" aria-hidden="true">
                                                           <div class="modal-dialog">
                                                             <div class="modal-content">
                                                               <div class="modal-header">
@@ -262,7 +264,13 @@
                                                                <form id="add_sec" action="/add_sec" method="post">
                                                                   <div>
                                                                     <label >课程名称</label>
-                                                                    <input type="text"  name="course_name" class="form-control" value="{{ course_name }}"  readonly>
+                                                                    <input type="text"  name="course_name" class="form-control" value="{{ course['course_name'] }}"  readonly>
+                                                                  </div>
+                                                                   <div >
+                                                                      {% for row in course['sections'] %}
+                                                                        <label>章节序号</label>
+                                                                        <input type="text" name="sec_num" class="form-control {% if loop.last %}last-section{% endif %}" value="{{ row.section_num }}" readonly>
+                                                                    {% endfor %}
                                                                   </div>
                                                                   <div >
                                                                     <label >章节名称</label>
@@ -285,6 +293,7 @@
                                                             </div>
                                                           </div>
                                                     </tr>
+
                                             {% endfor%}
                                             </tbody>
                                         </table>

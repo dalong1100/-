@@ -286,27 +286,38 @@ def sear_sec():
         course_name = section['course_name']
         # course_id = section['course_id']
         # 如果课程名称不在嵌套字典中，则添加它并创建一个空列表来存储章节
-        if course_name not in nested_dict:
-            nested_dict[course_name] = []
-            # nested_dict[course_id] = []
-
+        course_key = (section['course_id'], section['course_name'])
+        if course_key not in nested_dict:
+            nested_dict[course_key] = {
+                'course_id': section['course_id'],
+                'course_name': section['course_name'],
+                'sections': []
+            }
         # 从章节字典中移除不需要的键（例如course_id和可能的course_name，因为它们在嵌套结构中已经隐含了）
         # 这里我们假设只保留与章节直接相关的键
-        section_for_dict = {
+        nested_dict[course_key]['sections'].append( {
             'section_ID': section['section_ID'],
             'section_name': section['section_name'],
             'section_num': section['section_num'],
             'section_URL': section['section_URL'],
             'section_des': section['section_des'],
             'section_date': section['section_date']
-        }
+        })
 
         # 将处理后的章节字典添加到对应课程的列表中
-        nested_dict[course_name].append(section_for_dict)
+        # nested_dict[course_name].append(section_for_dict)
         # nested_dict[course_id].append(section_for_dict)
-
+        # transformed_data = [value for key, value in nested_dict.items()]
     # 打印嵌套字典以验证结果
-    print(nested_dict)
+    transformed_data = [value for key, value in nested_dict.items()]
+
+    # 输出转换后的数据以验证结果
+    for course in transformed_data:
+        print(course)
+
+
+
+
 
     files = os.listdir(FILE_DIRECTORY)
 
@@ -333,7 +344,7 @@ def sear_sec():
                    num_user=num_user,
                    num_courses=num_courses,
                    num_resources=num_resources,
-                   courses=nested_dict,
+                   courses=transformed_data,
                            )
 #删除章节--section_id
 @admin_bp.route('/del_cour_sec/<int:sections_id>', methods=['GET', 'POST'])
