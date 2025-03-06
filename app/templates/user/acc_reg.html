@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>在线学习平台-用户注册</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+
+    <!-- css include -->
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/fontawesome.css">
+    <link rel="stylesheet" href="../../static/css/themify-icons.css">
+    <link rel="stylesheet" href="../../static/css/animate.min.css">
+    <link rel="stylesheet" href="../../static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../static/css/magnific-popup.css">
+    <link rel="stylesheet" href="../../static/css/metismenu.css">
+    <link rel="stylesheet" href="../../static/css/nice-select.css">
+    <link rel="stylesheet" href="../../static/css/jquery-ui.css">
+    <link rel="stylesheet" href="../../static/css/common.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/responsive.css">
+</head>
+
+<body>
+    <!-- body wrap start -->
+    <div class="body_wrap">
+
+        <!-- backtotop - start -->
+        <div id="thetop"></div>
+        <div id="backtotop">
+            <a href="#" id="scroll">
+                <i class="fal fa-arrow-up"></i>
+                <i class="fal fa-arrow-up"></i>
+            </a>
+        </div>
+        <!-- backtotop - end -->
+
+        <!-- start Preloader  -->
+        <div class="preloder_part">
+            <div class="spinner">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+            </div>
+        </div>
+        <!-- End Preloader  -->
+
+        <!-- header start -->
+ <header class="header_area">
+            <div id="sticky-header" class="header_bottom white_bg pl-130 pr-130">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-xl-2 col-lg-2 col-6">
+                            <div class="logo">
+                                <a href="{{ url_for('extra_router.index')}}"><img src="../../static/picture/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-8 d-none d-lg-block">
+                            <nav class="main_menu">
+                                <ul>
+                                    <li >
+                                        <a href="{{ url_for('extra_router.index')}}">主页</a>
+                                    </li>
+                                    <li >
+                                        <a href="{{ url_for('extra_router.index_res')}}">资源社区</a>
+                                    </li>
+                                    <li class="has_dropdown">
+                                        <a href="#">优质课程</a>
+                                        <ul class="submenu">
+                                            <li><a href="{{ url_for('extra_router.courses_index')}}">所有课程</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has_dropdown">
+                                        <a href="#">交流社区</a>
+                                        <ul class="submenu">
+                                            {% for row in nav_select_comm %}
+                                            <li><a href="{{ url_for('extra_router.comm', comm_tag=row['comm_tag']) }}">{{ row['comm_tag'] }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('admin.admin_page')}}">教学管理</a>
+
+                                    </li>
+                                    <li >
+                                        {% if username%}
+                                        <a href="{{ url_for('extra_router.index_up_self')}}" >个人中心</a>
+                                        {% else %}
+                                        <a style="color: #000000" onclick="fun1()">个人中心</a>
+                                        {%endif %}
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-xl-3 col-lg-2 col-6">
+                            <div class="header_right">
+                                <div class="header_search_wrap">
+                                    <div class="search_main">
+                                        <i class="fal fa-search"></i>
+                                        <span><i class="fal fa-times"></i></span>
+                                    </div>
+                                    <div class="search_form_main">
+                                        <form role="search" method="get" action="#">
+                                            <input type="text" placeholder="搜索关键词">
+                                            <button type="submit"><i class="fal fa-search"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="hamburger_menu">
+                                    <a href="javascript:void(0);" class="">
+                                        <i class="fal fa-bars"></i>
+                                    </a>
+                                </div>
+                                <div class="account">
+                                     {% if username %}
+                                        <p>你好 {{ username }}! <a href="{{ url_for('extra_router.logout') }}">退出登录</a></p>
+                                        {% else %}
+                                    <a href="{{ url_for('extra_router.acc_login')}}"><i class="fal fa-key"></i>账户</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header start -->
+
+        <!-- slide-bar start -->
+        <aside class="slide-bar">
+            <div class="close-mobile-menu">
+                <a href="javascript:void(0);"><i class="ti-close"></i></a>
+            </div>
+            <div class="sidebar-info">
+                <div class="sidebar-logo mb-30">
+                    <a href="../html/index.html">
+                        <img src="../../static/picture/logo.png" alt="logo">
+                    </a>
+                </div>
+                <div class="sidebar-content mb-45">
+                      {% if username %}
+                        <p>你好, {{ username }}! <a href="{{ url_for('extra_router.logout') }}">退出登录</a></p>
+                        {% else %}
+                     <span style="width: 100%;height: 100px;margin-top: 30px">
+                        <a class="thm_btn f-left" href="{{ url_for('extra_router.acc_login')}}">登录</a>
+                        <a class="thm_btn f-right " href="{{ url_for('extra_router.acc_reg')}}">注册</a>
+                     </span>
+                    {% endif %}
+                    <div class="s-title">
+                        <h4 class="s-title">关于我们</h4>
+                        <p>我们相信每个人都有通过科技进步和发展的机会。我们的目标是提供一个在线学习社区，让每个人都能获得未来的技能。</p>
+                    </div>
+
+
+                </div>
+                <div class="s_contact-list mb-30">
+                    <h4 class="s-title">联系我们</h4>
+                    <div class="footer_widget pt-20">
+                        <ul>
+                            <li>
+                                <p>786/A 罗马达大厦 纽约布鲁克林</p>
+                            </li>
+                            <li>
+                                <p>+987 876 765765 65</p>
+                                <p>(987)787 876876 87</p>
+                            </li>
+                            <li>
+                                <p>info@webmail.com</p>
+                                <p>jobsinfo@webmail.com</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- sidebar-info start -->
+
+
+            <!-- sidebar-info end -->
+
+            <!-- side-mobile-menu start -->
+            <nav class="side-mobile-menu">
+                <div class="header-mobile-search">
+                    <form role="search" method="get" action="#">
+                        <input type="text" placeholder="搜索关键词">
+                        <button type="submit"><i class="ti-search"></i></button>
+                    </form>
+                </div>
+                <ul id="mobile-menu-active">
+                    <li >
+                        <a href="{{ url_for('extra_router.index')}}">主页</a>
+                    </li>
+                    <li >
+                         <a href="{{ url_for('extra_router.index_res')}}">资源社区</a>
+                    </li>
+                   <li class="has_dropdown">
+                        <a href="#">优质课程</a>
+                        <ul class="submenu">
+                            <li><a href="{{ url_for('extra_router.courses_index')}}">所有课程</a></li>
+
+                        </ul>
+                   </li>
+                    <li class="has_dropdown">
+                        <a href="#">交流社区</a>
+                        <ul class="submenu">
+                            {% for row in nav_select_comm %}
+                            <li><a href="{{ url_for('extra_router.comm', comm_tag=row['comm_tag']) }}">{{ row['comm_tag'] }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.admin_page')}}">教学管理</a>
+
+                    </li>
+                    <li class="has_dropdown">
+                        {% if username%}
+                        <a href="{{ url_for('extra_router.index_up_self')}}" >个人中心</a>
+                        {% else %}
+                        <a style="color: #000000" onclick="fun1()">个人中心</a>
+                        {%endif %}
+                        <ul class="submenu">
+                         {% if username %}
+                        <a href="{{ url_for('extra_router.index_up_self')}}">你好, {{ username }}!进入个人中心</a>
+                         <a href="{{ url_for('extra_router.logout') }}">退出登录</a>
+                        {% else %}
+                        <a  href="{{ url_for('extra_router.acc_login')}}">登录</a>
+                        <a  href="{{ url_for('extra_router.acc_reg')}}">注册</a>
+                    {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+
+            </nav>
+            <!-- side-mobile-menu end -->
+        </aside>
+
+        <div class="body-overlay"></div>
+        <!-- slide-bar end -->
+
+        <main>
+
+            <section class="account_area pt-120 pb-90">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="account_wrap">
+                                <h3 class="title">注册您的账户</h3>
+                                <form  action="/acc_reg" method="post">
+                                    <input type="text" name="username" placeholder="您的姓名">
+                                    <input type="text" name="email" placeholder="您的邮箱">
+                                    <input type="password"  name="password" placeholder="密码">
+                                    <input type="submit" value="立即注册" onclick="reg">
+                                    <div class="action ul_li">
+                                        <span class="left">
+                                            <input id="remember2" type="checkbox">
+                                            <label for="remember2">记住我</label>
+                                        </span>
+                                        <span class="right">
+                                            <span>已有账户？<a href="{{ url_for('extra_router.acc_login')}}">登录</a></span>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- footer start -->
+        <footer class="footer_area footer_bg ">
+            <div class="container">
+                <div class="footer_main">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-6">
+                            <div class="footer_widget">
+                                <h3>关于 Edulan</h3>
+                                <div class="about_text">
+                                    <p>我们致力于提供优质的在线学习资源，帮助每个人充分发挥自身潜力。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="footer_widget footer_link-left">
+                                <h3>分类</h3>
+                                <ul class="footer_link">
+                                    <li><a href="#">所有课程</a></li>
+                                    <li><a href="#">设计课程</a></li>
+                                    <li><a href="#">品牌设计</a></li>
+                                    <li><a href="#">商业课程</a></li>
+                                    <li><a href="#">建筑课程</a></li>
+                                    <li><a href="#">数字品牌</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="footer_widget footer_link-right">
+                                <h3>支持</h3>
+                                <ul class="footer_link">
+                                    <li><a href="#">联系支持</a></li>
+                                    <li><a href="#">系统要求</a></li>
+                                    <li><a href="#">网站反馈</a></li>
+                                    <li><a href="#">注册激活码</a></li>
+                                    <li><a href="#">24/7 服务</a></li>
+                                    <li><a href="#">系统要求</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+    </div>
+    <!-- body wrap end -->
+
+    <!-- jquery include -->
+    <script src="../../static/js/jquery-3.5.1.min.js"></script>
+    <script src="../../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/js/owl.carousel.min.js"></script>
+    <script src="../../static/js/metismenu.min.js"></script>
+    <script src="../../static/js/wow.min.js"></script>
+    <script src="../../static/js/jquery.nice-select.min.js"></script>
+    <script src="../../static/js/jquery-ui.js"></script>
+    <script src="../../static/js/isotope.pkgd.min.js"></script>
+    <script src="../../static/js/imagesloaded.pkgd.min.js"></script>
+    <script src="../../static/js/jquery.magnific-popup.min.js"></script>
+    <script src="../../static/js/main.js"></script>
+</body>
+<script>
+    function reg(){
+
+        if(confirm("注册成功")){
+            window.location.href=`/login`
+        }
+    }
+</script>
+</html>

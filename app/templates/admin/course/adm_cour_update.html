@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-name" content="focus" />
+    <title>教学管理界面</title>
+    <!-- ================= Favicon ================== -->
+    <!-- Standard -->
+    <!-- Styles -->
+    <link href="../../../static/css/lib/calendar2/pignose.calendar.min.css" rel="stylesheet">
+    <link href="../../../static/css/lib/chartist/chartist.min.css" rel="stylesheet">
+    <link href="../../../static/css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../static/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="../../../static/css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="../../../static/css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="../../../static/css/lib/weather-icons.css" rel="stylesheet" />
+    <link href="../../../static/css/lib/menubar/sidebar.css" rel="stylesheet">
+    <link href="../../../static/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../static/css/lib/helper.css" rel="stylesheet">
+    <link href="../../../static/css/style01.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+        <div class="nano">
+            <div class="nano-content">
+                <ul>
+                    <div class="logo"><a href="index.html">
+                        <span>Focus</span></a></div>
+
+                    <li class="label">课程管理</li>
+                    <li><a class="sidebar-sub-toggle"><i class="ti-bar-chart-alt"></i> 课程设置 <span
+                                class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="{{url_for('admin.adm_courses')}}">基本信息管理</a></li>
+                            <li><a href="{{url_for('admin.sear_sec')}}">课程章节管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="{{url_for('admin.courses_talk_index')}}"><i class="ti-email"></i> 课程评价</a></li>
+
+                    <li class="label">学习资源</li>
+                    <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> 学习资源 <span
+                                class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="{{url_for('admin.res_index')}}">学习资源数据概述</a></li>
+                            <li><a href="{{url_for('admin.adm_up_res')}}">学习资源上传</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="label">交流社区管理</li>
+                     <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i>交流社区管理  <span
+                                class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="{{url_for('admin.post_index')}}"><i class="ti-view-list-alt"></i>交流帖子管理</a></li>
+                            <li><a href="{{url_for('admin.adm_comments_index')}}"><i class="ti-view-list-alt"></i>帖子评论管理</a></li>
+                        </ul>
+                    <li class="label">学员信息管理</li>
+                    <li><a href="{{url_for('admin.adm_search_users')}}"><i class="ti-files"></i>学员基本信息 </a></li>
+                    <li><a href="{{url_for('admin.user_sel_class')}}"><i class="ti-target"></i>学员学习信息 <span class="sidebar-collapse-icon "></span></a></li>
+                    <li><a href="{{url_for('admin.output_user_info')}}"><i class="ti-file"></i>导出学生数据</a></li>
+                    <li><a href="{{ url_for('admin.adm_logout')}}"><i class="ti-close"></i> 退出登录</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /# sidebar -->
+
+    <div class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="float-left">
+                        <div class="hamburger sidebar-toggle">
+                            <span class="line"></span>
+                            <span class="line"></span>
+                            <span class="line"></span>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <div class="dropdown ">
+                            <div class="header-icon" data-toggle="dropdown">
+                                <span class="user-avatar">{{username}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <!-- /# row -->
+                <section id="main-content"><div class="row">
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-user color-primary border-primary"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">课程数量</div>
+                                        <div class="stat-digit">{{num_courses}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-layout-grid2 color-pink border-pink"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">资源数量</div>
+                                        <div class="stat-digit">{{num_resources}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-link color-danger border-danger"></i></div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">学员数量</div>
+                                        <div class="stat-digit">{{num_user}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                       <div class="col-lg-12">
+                            <div class="card">
+                                <form>
+                                  <div class="form-group">
+                                    <label >授课教师</label>
+                                    <input type="email" class="form-control" id="input1" aria-describedby="emailHelp">
+                                  </div>
+                                  <div class="form-group">
+                                    <label >课程名称</label>
+                                    <input type="password" class="form-control" id="input2">
+                                  </div>
+                                   <div class="form-group">
+                                    <label >课程描述</label>
+                                    <input type="password" class="form-control" id="input3">
+                                  </div>
+                                    <div class="form-group">
+                                    <label >课程类型</label>
+                                    <input type="password" class="form-control" id="input4">
+                                  </div>
+                                    <div class="form-group">
+                                    <label >所属科目</label>
+                                    <input type="password" class="form-control" id="input5">
+                                  </div>
+
+                                  <button type="submit" class="btn btn-primary">更新</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /# column -->
+                    </div>
+                    <!-- /# row -->
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- jquery vendor -->
+    <script src="../../../static/js/lib/jquery.min.js"></script>
+    <script src="../../../static/js/lib/jquery.nanoscroller.min.js"></script>
+    <!-- nano scroller -->
+    <script src="../../../static/js/lib/menubar/sidebar.js"></script>
+    <script src="../../../static/js/lib/preloader/pace.min.js"></script>
+    <!-- sidebar -->
+
+    <script src="../../../static/js/lib/bootstrap.min.js"></script>
+    <script src="../../../static/js/scripts.js"></script>
+    <!-- bootstrap -->
+
+    <script src="../../../static/js/lib/calendar-2/moment.latest.min.js"></script>
+    <script src="../../../static/js/lib/calendar-2/pignose.calendar.min.js"></script>
+    <script src="../../../static/js/lib/calendar-2/pignose.init.js"></script>
+
+
+    <script src="../../../static/js/lib/weather/jquery.simpleWeather.min.js"></script>
+    <script src="../../../static/js/lib/weather/weather-init.js"></script>
+    <script src="../../../static/js/lib/circle-progress/circle-progress.min.js"></script>
+    <script src="../../../static/js/lib/circle-progress/circle-progress-init.js"></script>
+
+    <script src="../../../static/js/lib/sparklinechart/jquery.sparkline.min.js"></script>
+    <script src="../../../static/js/lib/sparklinechart/sparkline.init.js"></script>
+    <script src="../../../static/js/lib/owl-carousel/owl.carousel.min.js"></script>
+    <script src="../../../static/js/lib/owl-carousel/owl.carousel-init.js"></script>
+    <!-- scripit init-->
+    <script src="../../../static/js/dashboard2.js"></script>
+</body>
+
+</html>

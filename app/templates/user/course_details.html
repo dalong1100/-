@@ -1,0 +1,625 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>在线学习平台-课程详情</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+
+    <!-- CSS 引入 -->
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/fontawesome.css">
+    <link rel="stylesheet" href="../../static/css/themify-icons.css">
+    <link rel="stylesheet" href="../../static/css/animate.min.css">
+    <link rel="stylesheet" href="../../static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../static/css/magnific-popup.css">
+    <link rel="stylesheet" href="../../static/css/metismenu.css">
+    <link rel="stylesheet" href="../../static/css/nice-select.css">
+    <link rel="stylesheet" href="../../static/css/jquery-ui.css">
+    <link rel="stylesheet" href="../../static/css/common.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/responsive.css">
+</head>
+
+<body>
+    <!-- 页面主体开始 -->
+    <div class="body_wrap">
+
+        <!-- 返回顶部 - 开始 -->
+        <div id="thetop"></div>
+        <div id="backtotop">
+            <a href="#" id="scroll">
+                <i class="fal fa-arrow-up"></i>
+                <i class="fal fa-arrow-up"></i>
+            </a>
+        </div>
+        <!-- 返回顶部 - 结束 -->
+
+        <!-- 加载动画开始 -->
+        <div class="preloder_part">
+            <div class="spinner">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+            </div>
+        </div>
+        <!-- 加载动画结束 -->
+ <header class="header_area">
+            <div id="sticky-header" class="header_bottom white_bg pl-130 pr-130">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-xl-2 col-lg-2 col-6">
+                            <div class="logo">
+                                <a href="{{ url_for('extra_router.index')}}"><img src="../../static/picture/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-8 d-none d-lg-block">
+                            <nav class="main_menu">
+                                <ul>
+                                    <li >
+                                        <a href="{{ url_for('extra_router.index')}}">主页</a>
+                                    </li>
+                                    <li >
+                                        <a href="{{ url_for('extra_router.index_res')}}">资源社区</a>
+                                    </li>
+                                    <li class="has_dropdown">
+                                        <a href="#">优质课程</a>
+                                        <ul class="submenu">
+                                            <li><a href="{{ url_for('extra_router.courses_index')}}">所有课程</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has_dropdown">
+                                        <a href="#">交流社区</a>
+                                        <ul class="submenu">
+                                            {% for row in nav_select_comm %}
+                                            <li><a href="{{ url_for('extra_router.comm', comm_tag=row['comm_tag']) }}">{{ row['comm_tag'] }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('admin.admin_page')}}">教学管理</a>
+
+                                    </li>
+                                    <li >
+                                        {% if username%}
+                                        <a href="{{ url_for('extra_router.index_up_self')}}" >个人中心</a>
+                                        {% else %}
+                                        <a style="color: #000000" onclick="fun1()">个人中心</a>
+                                        {%endif %}
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-xl-3 col-lg-2 col-6">
+                            <div class="header_right">
+                                <div class="header_search_wrap">
+                                    <div class="search_main">
+                                        <i class="fal fa-search"></i>
+                                        <span><i class="fal fa-times"></i></span>
+                                    </div>
+                                    <div class="search_form_main">
+                                        <form role="search" method="get" action="#">
+                                            <input type="text" placeholder="搜索关键词">
+                                            <button type="submit"><i class="fal fa-search"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="hamburger_menu">
+                                    <a href="javascript:void(0);" class="">
+                                        <i class="fal fa-bars"></i>
+                                    </a>
+                                </div>
+                                <div class="account">
+                                     {% if username %}
+                                        <p>你好 {{ username }}! <a href="{{ url_for('extra_router.logout') }}">退出登录</a></p>
+                                        {% else %}
+                                    <a href="{{ url_for('extra_router.acc_login')}}"><i class="fal fa-key"></i>账户</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header start -->
+
+        <!-- slide-bar start -->
+        <aside class="slide-bar">
+            <div class="close-mobile-menu">
+                <a href="javascript:void(0);"><i class="ti-close"></i></a>
+            </div>
+            <div class="sidebar-info">
+                <div class="sidebar-logo mb-30">
+                    <a href="../html/index.html">
+                        <img src="../../static/picture/logo.png" alt="logo">
+                    </a>
+                </div>
+                <div class="sidebar-content mb-45">
+                      {% if username %}
+                        <p>你好, {{ username }}! <a href="{{ url_for('extra_router.logout') }}">退出登录</a></p>
+                        {% else %}
+                     <span style="width: 100%;height: 100px;margin-top: 30px">
+                        <a class="thm_btn f-left" href="{{ url_for('extra_router.acc_login')}}">登录</a>
+                        <a class="thm_btn f-right " href="{{ url_for('extra_router.acc_reg')}}">注册</a>
+                     </span>
+                    {% endif %}
+                    <div class="s-title">
+                        <h4 class="s-title">关于我们</h4>
+                        <p>我们相信每个人都有通过科技进步和发展的机会。我们的目标是提供一个在线学习社区，让每个人都能获得未来的技能。</p>
+                    </div>
+
+
+                </div>
+                <div class="s_contact-list mb-30">
+                    <h4 class="s-title">联系我们</h4>
+                    <div class="footer_widget pt-20">
+                        <ul>
+                            <li>
+                                <p>786/A 罗马达大厦 纽约布鲁克林</p>
+                            </li>
+                            <li>
+                                <p>+987 876 765765 65</p>
+                                <p>(987)787 876876 87</p>
+                            </li>
+                            <li>
+                                <p>info@webmail.com</p>
+                                <p>jobsinfo@webmail.com</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- sidebar-info start -->
+
+
+            <!-- sidebar-info end -->
+
+            <!-- side-mobile-menu start -->
+            <nav class="side-mobile-menu">
+                <div class="header-mobile-search">
+                    <form role="search" method="get" action="#">
+                        <input type="text" placeholder="搜索关键词">
+                        <button type="submit"><i class="ti-search"></i></button>
+                    </form>
+                </div>
+                <ul id="mobile-menu-active">
+                    <li >
+                        <a href="{{ url_for('extra_router.index')}}">主页</a>
+                    </li>
+                    <li >
+                         <a href="{{ url_for('extra_router.index_res')}}">资源社区</a>
+                    </li>
+                   <li class="has_dropdown">
+                        <a href="#">优质课程</a>
+                        <ul class="submenu">
+                            <li><a href="{{ url_for('extra_router.courses_index')}}">所有课程</a></li>
+
+                        </ul>
+                   </li>
+                    <li class="has_dropdown">
+                        <a href="#">交流社区</a>
+                        <ul class="submenu">
+                            {% for row in nav_select_comm %}
+                            <li><a href="{{ url_for('extra_router.comm', comm_tag=row['comm_tag']) }}">{{ row['comm_tag'] }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.admin_page')}}">教学管理</a>
+
+                    </li>
+                    <li class="has_dropdown">
+                        {% if username%}
+                        <a href="{{ url_for('extra_router.index_up_self')}}" >个人中心</a>
+                        {% else %}
+                        <a style="color: #000000" onclick="fun1()">个人中心</a>
+                        {%endif %}
+                        <ul class="submenu">
+                         {% if username %}
+                        <a href="{{ url_for('extra_router.index_up_self')}}">你好, {{ username }}!进入个人中心</a>
+                         <a href="{{ url_for('extra_router.logout') }}">退出登录</a>
+                        {% else %}
+                        <a  href="{{ url_for('extra_router.acc_login')}}">登录</a>
+                        <a  href="{{ url_for('extra_router.acc_reg')}}">注册</a>
+                    {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+
+            </nav>
+            <!-- side-mobile-menu end -->
+        </aside>
+        <div class="body-overlay"></div>
+        <!-- 侧边栏结束 -->
+
+        <main>
+
+            <!-- 课程详情开始 -->
+            <section class="course_details_area pt-120 pb-90">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="course_dtls_left mb-30">
+                                <div class="cdl_top mb-30">
+                                    <div class="cd_thumb">
+                                        <img src="{{ data_teacher.course_url}}" alt="">
+                                    </div>
+                                    <div class="cd_content">
+                                        <div class="meta">
+                                            <div class="left ul_li">
+                                                <ul class="rating_star ul_li">
+                                                    <li><i class="fas fa-star"></i></li>
+                                                    <li><i class="fas fa-star"></i></li>
+                                                    <li><i class="fas fa-star"></i></li>
+                                                    <li><i class="fal fa-star"></i></li>
+                                                    <li><i class="fal fa-star"></i></li>
+                                                </ul>
+                                                <div class="review">
+                                                    <span>132 条评论</span>
+                                                </div>
+                                            </div>
+                                            <div class="right ul_li">
+                                               <a class="cd_btn" href="javascript:void(0)"
+                                                   onclick="selectCourse({{ course_id }})">
+                                                   注册课程 <i class="fal fa-long-arrow-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <h3 class="title">{{data_teacher.course_name}}</h3>
+                                        <div class="bottom">
+                                            <div class="left ul_li">
+                                                <div class="author">
+                                                    <img src="{{data_teacher.teacher_url}}" alt="">
+                                                </div>
+                                                <h4><span>作者 :</span>{{data_teacher.teacher_name}}</h4>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cdl_bottom">
+                                    <ul class="nav nav-pills mb-15" id="pills-tab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-home" type="button" role="tab"
+                                                aria-controls="pills-home" aria-selected="true">概述</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-profile" type="button" role="tab"
+                                                aria-controls="pills-profile" aria-selected="false">课程大纲</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-contact" type="button" role="tab"
+                                                aria-controls="pills-contact" aria-selected="false">讲师</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="pills-reviews-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-reviews" type="button" role="tab"
+                                                aria-controls="pills-reviews" aria-selected="false">评论</button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="pills-tabContent">
+                                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                            aria-labelledby="pills-home-tab">
+                                            <div class="ov_text_wrap">
+                                                <div class="ov_text">
+                                                    <p>{{data_teacher.course_desc}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                            aria-labelledby="pills-profile-tab">
+                                            <div class="cc_wrap mt-20">
+                                                <ul class="accordion_box active-block">
+                                                     {% for row in data_sections %}
+                                                    <li class="accordion block ">
+                                                        <div class="acc-btn">
+                                                            {{row['section_name']}}
+                                                        </div>
+                                                        <ul class="acc_body current">
+                                                            <li>
+                                                                <a class="popup-video"
+                                                                    href="https://www.youtube.com/watch?v=cRXm1p-CNyk"><i
+                                                                        class="fal fa-play"></i>课程介绍</a>
+                                                                <div class="acb_right">
+                                                                    <span class="title">
+                                                                        <a class="popup-video"
+                                                                            href="https://www.youtube.com/watch?v=cRXm1p-CNyk">预览</a>
+                                                                    </span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#"><i class="fal fa-file-alt"></i>学习资料</a>
+                                                                <div class="acb_right">
+                                                                    <span class="title"><a href="#">下载</a></span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <a class="popup-video" href="https://www.youtube.com/watch?v=cRXm1p-CNyk"><i class="fal fa-play"></i>章节介绍</a>
+                                                                <div class="acb_right">
+                                                                    <span class="time">{{row['section_des']}}</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                                            aria-labelledby="pills-contact-tab">
+                                            <div class="instructor_wrap">
+                                                <div class="instructor_info ul_li">
+                                                    <div class="instructor_img">
+                                                        <img src="../../static/picture/instructor.jpg" alt="">
+                                                    </div>
+                                                    <div class="info">
+                                                        <h3 class="title">{{data_teacher.teacher_name}}</h3>
+                                                        <div class="instructor_rating ul_li">
+                                                            <ul class="rating_star ul_li">
+                                                                <li><i class="fas fa-star"></i></li>
+                                                                <li><i class="fas fa-star"></i></li>
+                                                                <li><i class="fas fa-star"></i></li>
+                                                                <li><i class="fal fa-star"></i></li>
+                                                                <li><i class="fal fa-star"></i></li>
+                                                            </ul>
+                                                            <div class="review">
+                                                                <span>4.9 评分</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="instructor_student ul_li">
+                                                            <span>24 门课程</span>
+                                                            <span>243 学生</span>
+                                                        </div>
+                                                        <div class="instructor_btn mt-20">
+                                                            <a href="#">查看所有课程<i class="fal fa-long-arrow-right"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="instructor_dtls mt-30">
+                                                    <p>{{data_teacher.teacher_profile}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-reviews" role="tabpanel"
+                                            aria-labelledby="pills-reviews-tab">
+                                            <div class="review_wrap">
+                                             <div class="post_comment">
+                                    <h3 class="comment_title">{{len_reviews}}条评论</h3>
+                                    <ul class="comment_list mb-40">
+                                        {% for row in data_reviews %}
+                                        <li>
+                                            <div class="comment_author">
+                                                <img src="{{row.user_url}}" alt="">
+                                            </div>
+                                            <div class="comment_content">
+                                                <h6>{{ row.username}}</h6>
+                                                <span class="date"><i class="fal fa-calendar-alt"></i> {{ row.created_at}}</span>
+                                                <p>{{ row.review_content}}</p>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="divider"></div>
+                                    <div class="from_wrapper comment_form">
+                                        <h3 class="comment_title">留下您的评论</h3>
+                                        <form action="/insert_reviews/{{ course_id }}" method="post">
+                                            <textarea id="message" name="message" cols="30" rows="10" placeholder="输入您的评论..."></textarea>
+                                            <input class="thm_btn thm_btn-black" type="submit" id="submitReview" value="评论" >
+                                        </form>
+                                    </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 课程详情结束 -->
+
+
+        </main>
+
+        <!-- 页脚开始 -->
+        <footer class="footer_area footer_bg footer_space">
+            <div class="container">
+                <div class="subscribe_wrap">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-6">
+                            <div class="sub_text">
+                                <h3>订阅新闻</h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-6">
+                            <form class="sub_from" action="#">
+                                <input type="text" placeholder="输入您的邮箱">
+                                <button class="thm_btn">订阅</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer_main">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="footer_widget">
+                                <h3>关于 Edulan</h3>
+                                <div class="about_text">
+                                    <p>Rorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                </div>
+                                <div class="social_icon mt-45">
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-behance"></i></a>
+                                    <a href="#"><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <div class="footer_widget footer_link-left">
+                                <h3>类别</h3>
+                                <ul class="footer_link">
+                                    <li><a href="#">所有课程</a></li>
+                                    <li><a href="#">设计课程</a></li>
+                                    <li><a href="#">品牌设计</a></li>
+                                    <li><a href="#">商业</a></li>
+                                    <li><a href="#">建筑</a></li>
+                                    <li><a href="#">数字品牌</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="footer_widget footer_link-right">
+                                <h3>支持</h3>
+                                <ul class="footer_link">
+                                    <li><a href="#">联系客服</a></li>
+                                    <li><a href="#">系统要求</a></li>
+                                    <li><a href="#">网站反馈</a></li>
+                                    <li><a href="#">注册激活码</a></li>
+                                    <li><a href="#">24/7服务</a></li>
+                                    <li><a href="#">系统要求</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="footer_widget footer_right_text">
+                                <h3>联系我们</h3>
+                                <ul>
+                                    <li>
+                                        <p>786/A Romada tower mall Brooklyn, NYC</p>
+                                    </li>
+                                    <li>
+                                        <p>+987 876 765765 65</p>
+                                        <p>(987)787 876876 87</p>
+                                    </li>
+                                    <li>
+                                        <p>info@webmail.com</p>
+                                        <p>jobsinfo@webmail.com</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer_bottom">
+                    <div class="left f-left ul_li">
+                        <div class="logo">
+                            <a href="../app/templates/index.html"><img src="../app/static/picture/logo_white.png" alt=""></a>
+                        </div>
+                        <ul class="info ul_li">
+                            <li>info@webmail.com</li>
+                            <li>24/7服务</li>
+                        </ul>
+                    </div>
+                    <div class="right f-right">
+                        <a class="thm_btn thm_btn-border" href="account.html">登录<i class="fal fa-key"></i></a>
+                        <a class="thm_btn" href="account.html">注册<i class="fal fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- 页脚结束 -->
+
+    </div>
+    <!-- 页面主体结束 -->
+
+    <!-- 引入 jQuery -->
+    <script src="../../static/js/jquery-3.5.1.min.js"></script>
+    <script src="../../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/js/owl.carousel.min.js"></script>
+    <script src="../../static/js/metismenu.min.js"></script>
+    <script src="../../static/js/wow.min.js"></script>
+    <script src="../../static/js/jquery.nice-select.min.js"></script>
+    <script src="../../static/js/jquery-ui.js"></script>
+    <script src="../../static/js/isotope.pkgd.min.js"></script>
+    <script src="../../static/js/imagesloaded.pkgd.min.js"></script>
+    <script src="../../static/js/jquery.magnific-popup.min.js"></script>
+    <script src="../../static/js/main.js"></script>
+<script>
+ function selectCourse(courseId) {
+     const  course_Id=courseId
+    fetch(`/ins_sec/${courseId}/0`, { method: 'GET' })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 401) {
+            // 用户未登录的处理
+            if (confirm(data.message + " 是否去登录？")) {
+                window.location.href = '/login'; // 替换为实际登录页面的 URL
+            }
+        } else if (data.status === 200) {
+            // 选择成功的处理
+            if (confirm(data.message + " 是否去播放？")) {
+                let a="/cla_dis/"
+                let b=course_Id
+                let c="/0"
+                let d=a+b+c
+                window.location.href = d; // URL播放界面
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("操作失败，请稍后再试！");
+    });
+}
+
+
+</script>
+
+<script>
+
+    document.getElementById('submitReview').addEventListener('click', function (e) {
+    e.preventDefault(); // 阻止默认的表单提交行为
+
+    const message = document.getElementById('message').value.trim();
+    if (!message) {
+        alert('评论内容不能为空');
+        return;
+    }
+
+    // 提交评论的 AJAX 请求
+    fetch('/insert_reviews/{{ course_id }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            message: message
+        })
+    })
+    .then(response => response.json()) // 假设返回 JSON 数据
+    .then(data => {
+        if (data.success) {
+            if (confirm(`${data.message}`)) {
+                // 跳转到登录页面
+                window.location.href = '/courses_details/{{ course_id }}'; // 成功
+            }
+        } else {
+           if (confirm(`${data.message}，是否前往登录？`)) {
+                // 跳转到登录页面
+                window.location.href = '/login'; // 替换为实际的登录页面 URL
+            }
+        }
+    })
+    .catch(error => {
+        console.error('提交失败:', error);
+        alert('评论失败，请稍后重试');
+    });
+});
+
+</script>
+</body>
+
+</html>

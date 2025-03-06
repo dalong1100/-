@@ -1,0 +1,13 @@
+<ul class="accordion_box active-block">
+                             {% for row in data_note %}
+                            <li class="accordion block ">
+                                <div class="acc-btn" >
+                                   第{{row.section_id}}章笔记内容
+                                </div>
+
+                                    <li>
+                                        <input class="popup-video" value="{{row.content }}">
+                                    </li>
+                            </li>
+                            {% endfor %}
+                        </ul>

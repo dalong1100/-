@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+        }
+        .container {
+            height: 100%;
+            background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+        }
+        .login-wrapper {
+            background-color: #fff;
+            width: 358px;
+            height: 500px;
+            border-radius: 15px;
+            padding: 0 50px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .header {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 200px;
+        }
+        .input-item {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 0;
+            padding: 10px;
+            border-bottom: 1px solid rgb(128, 125, 125);
+            font-size: 15px;
+            outline: none;
+        }
+        .input-item::placeholder {
+            text-transform: uppercase;
+        }
+        .btn {
+            border-color: transparent;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: 40px;
+            background-image: linear-gradient(to right, #a6c1ee, #fbc2eb);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">教学管理登录</div>
+            <div class="form-wrapper">
+                <form id="login" action="/adm_login" method="post">
+
+                    <input type="text" name="email" placeholder="管理员账户" class="input-item">
+                    <input type="password" name="password" placeholder="管理员密码" class="input-item">
+                    <button type="button" class="btn" onclick="fun2(event)" >登录</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+ <script>
+  let isSubmitting = false;  // 标志位，防止重复提交
+
+function fun2(event) {
+    // 如果正在提交，就阻止后续操作
+    if (isSubmitting) return;
+
+    isSubmitting = true;  // 设置标志位为正在提交
+
+    event.preventDefault();  // 阻止表单默认提交
+
+    const email = document.querySelector('input[name="email"]').value;
+    const password = document.querySelector('input[name="password"]').value;
+
+    fetch('/adm_login', {
+        method: 'POST',
+        body: new URLSearchParams({
+            'email': email,
+            'password': password
+        }),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("响应数据: ", data);
+        if (data.status === "error") {
+            alert(data.message);
+        } else if (data.status === "success") {
+            alert(data.message);
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            }
+        }
+    })
+    .catch(error => {
+        alert("发生错误，请联系管理员。");
+    })
+    .finally(() => {
+        isSubmitting = false;  // 请求结束后重置标志位，允许再次提交
+    });
+}
+
+    </script>
+</html>

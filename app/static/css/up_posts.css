@@ -1,0 +1,78 @@
+/* 通用样式 */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* 上传表单容器 */
+.upload-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 标题样式 */
+.upload-container h2 {
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* 提交按钮样式 */
+.btn-upload {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.btn-upload:hover {
+    background-color: #0056b3;
+}
+
+/* 输入框和选择框的样式 */
+.form-control, .form-select {
+    border-radius: 5px;
+    box-shadow: none;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+/* 标签样式 */
+.form-label {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* 文件选择按钮样式 */
+.file-upload-label {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.file-upload-label:hover {
+    background-color: #0056b3;
+}
+
+.course-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.course-video {
+    width: 100%;
+    height: 400px;
+    background-color: #000;
+}
+.course-description {
+    height: 150px;
+    overflow: hidden;
+}
